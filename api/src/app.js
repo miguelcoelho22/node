@@ -52,3 +52,4 @@ app.delete("/livros/:id", (req, res) => {
 
 export default app;
 
+//mongodb+srv://admin:<db_password>@livraria-db.ati3muh.mongodb.net/?retryWrites=true&w=majority&appName=livraria-db
