@@ -1,4 +1,14 @@
 import express from "express";
+import conectaNaDataBase from "./config/dbConnect.js";
+
+const conexao = await conectaNaDataBase();
+conexao.on("error", (erro) => {
+    console.error("erro de conexao", erro)
+})
+
+conexao.once("open", () => {
+    console.log("conexao com o banco feita com sucesso")
+})
 
 const app = express();
 app.use(express.json());
@@ -52,4 +62,3 @@ app.delete("/livros/:id", (req, res) => {
 
 export default app;
 
-//mongodb+srv://admin:<db_password>@livraria-db.ati3muh.mongodb.net/?retryWrites=true&w=majority&appName=livraria-db
