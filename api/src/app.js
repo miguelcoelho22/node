@@ -1,5 +1,7 @@
 import express from "express";
 import conectaNaDataBase from "./config/dbConnect.js";
+import livro from "./models/livro.js";
+import routes from "./Routes/index.js"
 
 const conexao = await conectaNaDataBase();
 conexao.on("error", (erro) => {
@@ -11,36 +13,16 @@ conexao.once("open", () => {
 })
 
 const app = express();
-app.use(express.json());
+routes(app)
 
-const livros = [
-    {
-        id : 1,
-        nome : "homem de ferro"
-    },
-    {
-        id : 2,
-        nome : "homem aranha"
-    }
-]
-
-function buscaLivro(id){
-    return livros.findIndex(livro => {
-        return livro.id === Number(id);
-    });
-}
-
-app.get("/", (req, res) => {
-    res.status(200).send("curso de node.js");
+app.get("/livros", async (req, res) => {
+    const listaLivros = await livro.find({});
+    res.status(200).json(listaLivros);
 });
 
-app.get("/livros", (req, res) => {
-    res.status(200).json(livros);
-});
-
-app.get("/livros/:id", (req, res) => {
-    const index = buscaLivro(req.params.id);
-    res.status(200).json(livros[index]);
+app.get("/livros/:id",async (req, res) => {
+    const livroId = await livro.findById(req.params.id);
+    res.status(200).json(livroId);
 })
 
 app.post("/livros", (req, res) => {

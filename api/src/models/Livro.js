@@ -1,6 +1,6 @@
 import mongoose, { version } from "mongoose";
 
-const livroSchema = new mongoose.schema({
+const livroSchema = new mongoose.Schema({
     id: {type: mongoose.Schema.Types.ObjectId},
     titulo : {type: String, require: true},
     editora : {type: String},
